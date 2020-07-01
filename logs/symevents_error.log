@@ -1,0 +1,19 @@
+[Wed Jul 01 20:06:47.845489 2020] [mpm_winnt:notice] [pid 10456:tid 780] AH00455: Apache/2.4.43 (Win64) OpenSSL/1.1.1g PHP/7.4.7 configured -- resuming normal operations
+[Wed Jul 01 20:06:47.846457 2020] [mpm_winnt:notice] [pid 10456:tid 780] AH00456: Apache Lounge VC15 Server built: Apr 22 2020 11:11:00
+[Wed Jul 01 20:06:47.846457 2020] [core:notice] [pid 10456:tid 780] AH00094: Command line: 'C:\\temp\\dev\\xampp\\apache\\bin\\httpd.exe -d C:/temp/dev/xampp/apache'
+[Wed Jul 01 20:06:47.847478 2020] [mpm_winnt:notice] [pid 10456:tid 780] AH00418: Parent: Created child process 11280
+[Wed Jul 01 20:06:48.166431 2020] [mpm_winnt:notice] [pid 11280:tid 712] AH00354: Child: Starting 150 worker threads.
+[Wed Jul 01 20:07:01.160725 2020] [php7:notice] [pid 11280:tid 1908] [client ::1:62568] [error] Uncaught PHP Exception Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException: "No route found for "GET /"" at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\vendor\\symfony\\http-kernel\\EventListener\\RouterListener.php line 136\r\n
+[Wed Jul 01 20:07:22.171905 2020] [mpm_winnt:notice] [pid 10456:tid 780] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Wed Jul 01 20:07:24.173514 2020] [mpm_winnt:notice] [pid 11280:tid 712] AH00364: Child: All worker threads have exited.
+[Wed Jul 01 20:07:24.192082 2020] [mpm_winnt:notice] [pid 10456:tid 780] AH00430: Parent: Child process 11280 exited successfully.
+[Wed Jul 01 20:07:39.781869 2020] [mpm_winnt:notice] [pid 10320:tid 776] AH00455: Apache/2.4.43 (Win64) OpenSSL/1.1.1g PHP/7.4.7 configured -- resuming normal operations
+[Wed Jul 01 20:07:39.782866 2020] [mpm_winnt:notice] [pid 10320:tid 776] AH00456: Apache Lounge VC15 Server built: Apr 22 2020 11:11:00
+[Wed Jul 01 20:07:39.782866 2020] [core:notice] [pid 10320:tid 776] AH00094: Command line: 'C:\\temp\\dev\\xampp\\apache\\bin\\httpd.exe -d C:/temp/dev/xampp/apache'
+[Wed Jul 01 20:07:39.783904 2020] [mpm_winnt:notice] [pid 10320:tid 776] AH00418: Parent: Created child process 6696
+[Wed Jul 01 20:07:40.094936 2020] [mpm_winnt:notice] [pid 6696:tid 724] AH00354: Child: Starting 150 worker threads.
+[Wed Jul 01 20:07:43.897738 2020] [php7:notice] [pid 6696:tid 1924] [client ::1:62572] [error] Uncaught PHP Exception Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException: "No route found for "GET /"" at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\vendor\\symfony\\http-kernel\\EventListener\\RouterListener.php line 136\r\n
+[Wed Jul 01 20:07:46.831480 2020] [php7:notice] [pid 6696:tid 1924] [client ::1:62572] [error] Uncaught PHP Exception Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException: "No route found for "GET /"" at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\vendor\\symfony\\http-kernel\\EventListener\\RouterListener.php line 136\r\n
+[Wed Jul 01 20:07:50.334867 2020] [php7:notice] [pid 6696:tid 1924] [client ::1:62572] [error] Uncaught PHP Exception Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException: "No route found for "GET /"" at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\vendor\\symfony\\http-kernel\\EventListener\\RouterListener.php line 136\r\n
+[Wed Jul 01 20:07:54.925161 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:62574] [error] Uncaught PHP Exception Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException: "No route found for "GET /"" at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\vendor\\symfony\\http-kernel\\EventListener\\RouterListener.php line 136\r\n
+[Wed Jul 01 20:08:34.628785 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:62581] [error] Uncaught PHP Exception Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException: "No route found for "GET /"" at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\vendor\\symfony\\http-kernel\\EventListener\\RouterListener.php line 136\r\n
