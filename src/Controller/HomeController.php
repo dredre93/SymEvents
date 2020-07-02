@@ -6,18 +6,10 @@
    
 class HomeController extends AbstractController {
 
-        /**
-       * @Route("/user", name="user")
-       */
-      public function user()
-      {
-          return $this->renderView ('user/user.html.twig');
-      }
-
       /**
        * @Route("/", name="home")
        */
-      public function index()
+      public function home()
       {
           return $this->render ('home/index.html.twig');
       }

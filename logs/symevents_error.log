@@ -28,3 +28,30 @@
 [Thu Jul 02 19:40:21.273045 2020] [php7:notice] [pid 6696:tid 1908] [client ::1:53288] [info] Matched route "home".\r\n
 [Thu Jul 02 19:43:04.471274 2020] [php7:notice] [pid 6696:tid 1908] [client ::1:53328] [info] Matched route "home".\r\n
 [Thu Jul 02 19:43:33.152577 2020] [php7:notice] [pid 6696:tid 1908] [client ::1:53337] [info] Matched route "home".\r\n
+[Thu Jul 02 19:50:00.502010 2020] [php7:notice] [pid 6696:tid 1908] [client ::1:60338] [info] Matched route "home".\r\n
+[Thu Jul 02 19:52:45.162571 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:60405] [info] Matched route "home".\r\n
+[Thu Jul 02 20:03:27.952362 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:60487] [info] Matched route "home".\r\n
+[Thu Jul 02 20:05:49.357809 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:60508] [info] Matched route "home".\r\n
+[Thu Jul 02 20:15:23.346423 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:51111] [info] Matched route "home".\r\n
+[Thu Jul 02 20:20:29.646750 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:60204] [info] Matched route "home".\r\n
+[Thu Jul 02 20:41:45.241526 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:51539] [info] Matched route "home".\r\n
+[Thu Jul 02 20:54:36.175038 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:51797] [info] Matched route "home".\r\n
+[Thu Jul 02 20:58:29.487926 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:51838] [info] Matched route "home".\r\n
+[Thu Jul 02 21:29:44.479559 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:57757] [info] Matched route "home".\r\n
+[Thu Jul 02 21:30:53.069040 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:57767] [error] Uncaught PHP Exception Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException: "No route found for "GET /"" at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\vendor\\symfony\\http-kernel\\EventListener\\RouterListener.php line 136\r\n
+[Thu Jul 02 21:31:41.382954 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:57779] [error] Uncaught PHP Exception Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException: "No route found for "GET /"" at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\vendor\\symfony\\http-kernel\\EventListener\\RouterListener.php line 136\r\n
+[Thu Jul 02 21:32:26.007587 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:57787] [error] Uncaught PHP Exception Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException: "No route found for "GET /"" at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\vendor\\symfony\\http-kernel\\EventListener\\RouterListener.php line 136\r\n
+[Thu Jul 02 21:34:00.924974 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:57798] [error] Uncaught PHP Exception Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException: "No route found for "GET /"" at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\vendor\\symfony\\http-kernel\\EventListener\\RouterListener.php line 136\r\n
+[Thu Jul 02 21:34:14.013036 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:57799] [info] Matched route "app_home_home".\r\n
+[Thu Jul 02 21:35:17.884733 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:57811] [info] Matched route "app_home_home".\r\n
+[Thu Jul 02 21:37:26.541394 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:57834] [critical] Uncaught PHP Exception Symfony\\Component\\Config\\Exception\\LoaderLoadException: "[Syntax Error] Expected PlainValue, got ''' at position 17 in method App\\Controller\\HomeController::home() in C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\config/routes\\../../src/Controller/ (which is being imported from "C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\config/routes/annotations.yaml"). Make sure annotations are installed and enabled." at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\vendor\\symfony\\config\\Loader\\FileLoader.php line 173\r\n
+[Thu Jul 02 21:38:03.118769 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:57839] [info] Matched route "home".\r\n
+[Thu Jul 02 21:40:58.888741 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:56447] [info] Matched route "home".\r\n
+[Thu Jul 02 21:40:58.987501 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:56447] [critical] Uncaught PHP Exception Twig\\Error\\RuntimeError: "An exception has been thrown during the rendering of a template ("Unable to generate a URL for the named route "user_list" as such route does not exist.")." at C:\\Users\\mdrewes\\Documents\\VisualStudioCode\\SymEvents\\templates\\home\\index.html.twig line 17\r\n
+[Thu Jul 02 21:51:26.980146 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:56602] [info] Matched route "home".\r\n
+[Thu Jul 02 22:02:56.542223 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:56755] [info] Matched route "home".\r\n
+[Thu Jul 02 22:04:01.421426 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:56763] [info] Matched route "home".\r\n
+[Thu Jul 02 22:09:22.724771 2020] [php7:notice] [pid 6696:tid 1916] [client ::1:56804] [info] Matched route "home".\r\n
+[Thu Jul 02 22:11:11.593650 2020] [mpm_winnt:notice] [pid 10320:tid 776] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Thu Jul 02 22:11:13.596476 2020] [mpm_winnt:notice] [pid 6696:tid 724] AH00364: Child: All worker threads have exited.
+[Thu Jul 02 22:11:14.490394 2020] [mpm_winnt:notice] [pid 10320:tid 776] AH00430: Parent: Child process 6696 exited successfully.

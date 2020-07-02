@@ -1,0 +1,4 @@
+::1 - - [02/Jul/2020:22:15:05 +0200] "GET /user HTTP/1.1" 200 1342 "http://localhost:22222/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
+::1 - - [02/Jul/2020:22:29:54 +0200] "GET /user HTTP/1.1" 200 1342 "http://localhost:22222/user" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
+::1 - - [02/Jul/2020:22:30:23 +0200] "GET / HTTP/1.1" 200 1342 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
+::1 - - [02/Jul/2020:22:30:26 +0200] "GET /user HTTP/1.1" 200 1342 "http://localhost:22222/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
