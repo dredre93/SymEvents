@@ -5,6 +5,8 @@ doctrine_mongodb:
         default:
             server: '%env(resolve:MONGODB_URL)%'
             options: {}
+        conn1:
+            server: mongodb://localhost:27017
     default_database: '%env(resolve:MONGODB_DB)%'
     document_managers:
         default:
@@ -16,3 +18,7 @@ doctrine_mongodb:
                     dir: '%kernel.project_dir%/src/Document'
                     prefix: 'App\Document'
                     alias: App
+        dm1:
+            connection: conn1
+            database: '%env(resolve:MONGODB_DB)%'
+            metadata_cache_driver: xcache

@@ -1,12 +1,13 @@
 <?php
     namespace App\Controller;
 
-use App\Document\User;
-use Symfony\Bundle\FrameworkBundle\Controller;
+    use App\Document\User;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
+    use Doctrine\ODM\MongoDB\DocumentManager;
    
-class UserController extends Controller {
+class UserController extends AbstractController {
 
       /**
        * @Route("/user", name="user_list")
@@ -19,12 +20,16 @@ class UserController extends Controller {
       /**
        * @Route("/user/create", name="create_user")
        */
-      public function create() 
+      public function create(DocumentManager $dm) :Response
       {
         $user = new User();
-        $user->setName('Bob');
-    
-        $dm = $this->get('doctrine_mongodb')->getManager();
+        $user->setFirstname('Bob');
+        $user->setName('Brown');
+        $user->setAlias('Bobby');
+        $user->setEmail('email@email.com');
+        $user->setIsAdmin(true);
+
+        //$conn1 = $this->get('doctrine_mongodb.odm.default_connection');
         $dm->persist($user);
         $dm->flush();
     
