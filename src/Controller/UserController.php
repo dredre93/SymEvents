@@ -6,7 +6,8 @@
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     use Doctrine\ODM\MongoDB\DocumentManager;
-   
+    use Symfony\Component\HttpFoundation\RedirectResponse;
+
 class UserController extends AbstractController {
 
       /**
@@ -34,5 +35,24 @@ class UserController extends AbstractController {
         $dm->flush();
     
         return new Response('Created product id ' . $user->getId());
+      }
+
+       /**
+       * @Route("/user/login", name="login")
+       */
+      public function login(DocumentManager $dm) :RedirectResponse
+      {
+        $user = new User();
+        $user->setFirstname('Bob');
+        $user->setName('Brown');
+        $user->setAlias('Bobby');
+        $user->setEmail('email@email.com');
+        $user->setIsAdmin(true);
+
+        //$conn1 = $this->get('doctrine_mongodb.odm.default_connection');
+        $dm->persist($user);
+        $dm->flush();
+    
+        return $this->redirectToRoute('home');
       }
   }
