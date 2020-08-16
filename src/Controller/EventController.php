@@ -1,38 +1,161 @@
 <?php
     namespace App\Controller;
 
-    use App\Document\User;
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use App\Document\Event;
+use DateTimeInterface;
+use DateTimeZone;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     use Doctrine\ODM\MongoDB\DocumentManager;
-   
+use EnumEventType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+
 class EventController extends AbstractController {
 
       /**
        * @Route("/event/list", name="event_list")
        */
-      public function getEvents() :Response
+      public function getEvents(DocumentManager $dm) :Response
       {
-          return $this->render ('event/evntlist.html.twig');
+          
+        $events = $dm->createQueryBuilder(Event::class)
+            ->hydrate(false)
+            ->getQuery()
+            ->execute()
+            ->toArray();
+        
+        
+        $reflectionExtractor = new ReflectionExtractor();
+        $listExtractors = [$reflectionExtractor];
+        $propertyInfo = new PropertyInfoExtractor($listExtractors);
+        $properties = $propertyInfo->getProperties(Event::class);
+        $exceptProps = "id";
+        $properties = array_filter($properties, function ($element) use ($exceptProps) { return ($element != $exceptProps); } );
+        
+          return $this->render ('event/event_list.html.twig', array('events'=> $events, 'properties'=> $properties));
+      }
+
+      
+      /**
+       * @Route("/event/calendar", name="calendar_overview")
+       */
+      public function showCalendar() :Response
+      {
+          return $this->render ('Calendar/calendar.html.twig');
       }
 
       /**
-       * @Route("/event/create", name="create_event")
+       * @Route("/event/createForm", name="create_form_event")
        */
-      public function create(DocumentManager $dm) :Response
+      public function createEvent(DocumentManager $dm, Request $request) :Response
       {
-        $user = new User();
-        $user->setFirstname('Bob');
-        $user->setName('Brown');
-        $user->setAlias('Bobby');
-        $user->setEmail('email@email.com');
-        $user->setIsAdmin(true);
+          // creates a task object and initializes some data for this example
+          $event = new Event();
+          //$timezone = new DateTimeZone("Europe/Germany");
+          $date = new \DateTime(date(DateTimeInterface::ISO8601, strtotime('today')) );
 
-        //$conn1 = $this->get('doctrine_mongodb.odm.default_connection');
-        $dm->persist($user);
-        $dm->flush();
-    
-        return new Response('Created product id ' . $user->getId());
+
+          //$start = $date->setISODate($date->format("y"), $date->format("n"), $date->format("d"));
+          $event->setStartDate( $date );
+
+          $endDt = new \DateTime(date(DateTimeInterface::ISO8601, strtotime('tomorrow') ));
+          $event->setEndDate( $endDt);
+          
+          $form = $this->createFormBuilder($event)
+              ->add('name', TextType::class)
+              ->add('startDate', DateType::class)        
+              ->add('endDate', DateType::class)         
+              ->add('type', ChoiceType::class, array( 
+                  'choices' => EnumEventType::getEnumValues(),
+                  'choice_label' => function($choice) {
+                    return EnumEventType::getTypeName($choice);
+                },
+              ))
+              ->add('save', SubmitType::class, 
+                    array('label' => 'Create Event')
+                    )
+              ->getForm();
+
+              $form->handleRequest($request);
+              if ($form->isSubmitted() && $form->isValid()) {
+                  // $form->getData() holds the submitted values
+                  // but, the original `$task` variable has also been updated
+                  $event = $form->getData();
+                  $event->getStartDate()->format(DateTimeInterface::ISO8601);
+                  $dm->persist($event);
+                  $dm->flush();
+                  return $this->redirectToRoute('event_list');
+              }
+
+              return $this->render(
+                'event/createEvent.html.twig',
+                array('form' => $form->createView(),
+                      'compound' => true,
+                    )
+            );
+      }
+
+        /**
+       * @Route("/event/edit/{id}", name="edit_event")
+       */
+      public function edit(DocumentManager $dm, string $id, Request $request) :Response
+      {
+          // creates a task object and initializes some data for this example
+          $event = $dm->getRepository(Event::class)->find($id);
+          
+          $form = $this->createFormBuilder($event)
+              ->add('name', TextType::class)
+              ->add('startDate', DateType::class)        
+              ->add('endDate', DateType::class)         
+              ->add('type', ChoiceType::class, array( 
+                  'choices' => EnumEventType::getEnumValues(),
+                  'choice_label' => function($choice) {
+                    return EnumEventType::getTypeName($choice);
+                },
+              ))
+              ->add('save', SubmitType::class, 
+                    array('label' => 'Save Event')
+                    )
+              ->getForm();
+
+              $form->handleRequest($request);
+              if ($form->isSubmitted() && $form->isValid()) {
+                  // $form->getData() holds the submitted values
+                  // but, the original `$task` variable has also been updated
+                  $event = $form->getData();
+                  
+                  $dm->persist($event);
+                  $dm->flush();
+                  return $this->redirectToRoute('event_list');
+              }
+
+              return $this->render(
+                'event/editEvent.html.twig',
+                array('form' => $form->createView(),
+                      'compound' => true,
+                    )
+            );
+      }
+
+
+       /**
+       * @Route("/event/delete/{id}", name="create_event")
+       */
+      public function delete(string $id, DocumentManager $dm) :Response
+      {
+          
+        $event = $dm->getRepository(Event::class)->find($id);
+          
+          $dm->remove($event);
+          $dm->flush();
+          
+          return $this->redirectToRoute("event_list");
       }
   }

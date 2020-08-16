@@ -1,0 +1,48 @@
+{% extends('base.html.twig') %}
+
+
+{% block body %}
+    
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-3 ">
+            <h1>Meine Events</h1>  
+        </div>          
+        <div class="col-9">
+            <a href="/event/createForm"> <span class="sr-only">(current)</span>
+                <img class="add-event" src="/data/calendar.svg" title="add" alt="add">
+            </a>  
+        </div>  
+    </div>
+    <div class="row justify-content-md-center">
+
+    
+    {% for property in properties %}
+            <div class="col event-box">{{property}}</div>                
+    {% endfor %}
+     <div class="col event-box"></div>
+     <div class="col event-box"></div>
+    </div>
+
+    {% for event in events %}
+        <div class="row justify-content-md-center">
+            <div class="col event-box">{{event.name}}</div>
+            <div class="col event-box">{{event.type}}</div>
+            <div class="col event-box">{{ event.startDate|date('d-m-Y H:i:s')}}</div>
+            <div class="col event-box">{{ event.endDate}}</div>
+
+            <div class="col event-box">
+               <a class="mx-auto" href="/event/edit/{{event._id}}"><span class="sr-only">(current)</span>
+                   <img src="/data/pen.svg" title="edit" alt="edit">
+               </a>
+            </div>
+            <div class="col event-box">
+               <a class="mx-auto" href="/event/delete/{{event._id}}"><span class="sr-only">(current)</span>
+                   <img src="/data/bin.svg"  title="delete" alt="delete">
+               </a>
+            </div>
+        </div>
+    {% endfor %}
+      
+</div>
+{% endblock %}

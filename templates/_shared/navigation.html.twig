@@ -1,0 +1,25 @@
+<!DOCTYPE html>  
+
+<nav class="navbar navbar-expand-lg justify-content-between navbar-light bg-light">
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">Symfony Events</a>
+
+  <div class="collapse navbar-collapse" id="navbarToggler">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ path('get_calendar', {'month': date("now").format('n')}) }}">Mein Kalender <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ path('event_list') }}">Meine Events</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Einstellungen</a>
+      </li>
+    </ul>
+    <div class="navbar-nav">
+        <a class="nav-item nav-link btn btn-outline-primary" href="logout">Logout</a>
+    </ul>
+   </div>
+</nav>

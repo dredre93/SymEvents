@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+
+
+{{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.name) }}
+            {{ form_row(form._token) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.type) }}
+            {{ form_row(form._token) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" id="some-custom-id">
+            {{ form_row(form.startDate) }}
+            {{ form_row(form._token) }}
+        </div>
+    </div>
+{{ form_end(form) }}
+
+
+{% endblock %}

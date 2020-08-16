@@ -1,0 +1,107 @@
+{% extends('base.html.twig') %}
+
+
+{% block body %}
+    <h1>Hallo {{ app.user.username }}</h1>
+   
+    {% if nextMonth is defined %}     
+     <h1>{{nextMonth}}</h1>   
+       {% set day = nextMonth|date('d')%}       
+       {% set month = nextMonth|date('n')%} 
+       {% set year = nextMonth|date('Y')%}
+       {% set isoYear = nextMonth|date('o')%}  
+    {% else %}
+       {% set nextMonth = date("now") %}     
+       {% set day = date("now").format('d') %}       
+       {% set month = date("now").format('n') %} 
+       {% set year = date("now").format('Y') %} 
+    {% endif %}
+    
+    {% set days, today, iSkip = "now"|date('t'),  date("now").format('%a'), -1 %}
+
+<div class="container">
+    <div class="row justify-content-md-center">        
+        <div class="col">
+            <h1>{{ nextMonth|date('M') }} {{ nextMonth|date('Y') }}</h1>
+        </div>
+        <div class="col">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Woche
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> Tag
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option3" autocomplete="off"> Monat
+                </label>
+            </div>            
+        </div>
+        <div class="col">
+            <span class="btn btn-outline-dark arrow-box">
+                <a href="{{ path('get_calendar', {'month': month - 1 })}}">       
+                    <svg width="4em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="white" xmlns="http://www.w3.org/2000/svg">     
+                        <path fill-rule="evenodd" d="M7.854 4.646a.5.5 0 0 1 0 .708L5.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
+                        <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h6.5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+                 </svg>
+                </a>
+            </span>
+            <span class="btn btn-outline-dark arrow-box">
+                <a href="{{ path('get_calendar', {'month': month + 1}) }}">       
+                    <svg width="4em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="white" xmlns="http://www.w3.org/2000/svg">     
+                        <path fill-rule="evenodd" d="M8.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.793 8 8.146 5.354a.5.5 0 0 1 0-.708z"/>
+                        <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5H11a.5.5 0 0 1 0 1H4.5A.5.5 0 0 1 4 8z"/>
+                    </svg>
+                </a>
+            </span>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center">
+        {% set offset = 2 %}
+        {% set maxColumns = 7 %}
+        {% set modifier = "%s month"|format(iSkip) %}
+        {% set daysLastMonth = month|date_modify(modifier)|date('t') %}
+        {% set countColumn = 0 %}
+
+        {% for o in 1..offset %}
+            <div class="col prev-day-box">{{daysLastMonth - offset + o}}</div>
+            {% set countColumn = countColumn + 1 %}
+        {% endfor %}
+        
+        {% for i in 1..days %}
+            {% set countColumn = countColumn + 1 %}
+
+            <div class="col day-box">
+                 <div class="row">
+                    <div class="col"> 
+                        <span>{{i}}</span>
+                    </div>
+                </div>
+                
+                {% if events is defined %}
+                    {% for event in events|filter(event => event.startDate|date('j') == i ) %}
+                        <div class="row event-box-elem"> 
+                            <div class="col">{{ event.name }}</div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+            </div>
+        
+            {% if countColumn % maxColumns == 0 %}
+                {% set countColumn = 0 %}
+                </div>
+                <div class="row justify-content-md-center">
+            {% endif %}
+
+            {% if loop.last %}
+                {% for i in 1..maxColumns - countColumn %}
+                    <div class="col after-day-box">{{i}}</div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

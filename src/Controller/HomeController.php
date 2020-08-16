@@ -11,8 +11,10 @@ class HomeController extends AbstractController {
        */
       public function home()
       {
-          return $this->render ('home/index.html.twig');
+         if ($this->getUser() == null){
+            return $this->redirect ('/login');
+         } else {
+            return $this->render ('home/index.html.twig');
+         }        
       }
-
-
   }

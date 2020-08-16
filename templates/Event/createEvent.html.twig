@@ -1,0 +1,41 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Create Event</h1>
+   
+   {{ form_start(form) }}
+    <div class="error-class">
+        {{ form_errors(form) }}
+    </div>
+
+    <div class="row">
+        <div class="col" id="name">
+            {{ form_row(form.name) }}
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col" id="type">
+            {{ form_row(form.type) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" id="startDate">
+            {{ form_row(form.startDate) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" id="endDate">
+            {{ form_row(form.endDate) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" id="save">
+            {{ form_row(form.save) }}
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+{% endblock %}

@@ -46,7 +46,7 @@ class User implements UserInterface
     protected $password;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @MongoDB\Field(type="bool")
      */
     protected $isAdmin;
 
