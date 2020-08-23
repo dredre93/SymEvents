@@ -80,7 +80,7 @@
                 </div>
                 
                 {% if events is defined %}
-                    {% for event in events|filter(event => event.startDate|date('j') == i ) %}
+                    {% for event in events|filter(event => event.startDate.toDateTime()|date('j') == i ) %}
                         <div class="row event-box-elem"> 
                             <div class="col">{{ event.name }}</div>
                         </div>

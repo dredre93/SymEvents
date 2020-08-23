@@ -32,7 +32,6 @@ form:before {
     height: 10rem;
     left: 0;
     top: 0;
-    background-color: rgba(233, 233, 233, 0.5);
     border: 1px solid transparent;
     border-color: black;
     min-width: 8rem;
@@ -94,8 +93,9 @@ form:before {
 }
 
 .event-box-elem {
-    background-color:rgb(66, 87, 202) ;
-    text-decoration-color: seashell;
+    background-color:#007bff ;
+    color: #fff;
+    margin-block-end: auto;
 }
 
 .add-event{

@@ -9,7 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Routing\Annotation\Route;
     use Doctrine\ODM\MongoDB\DocumentManager;
 use EnumEventType;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,7 +24,7 @@ class EventController extends AbstractController {
       /**
        * @Route("/event/list", name="event_list")
        */
-      public function getEvents(DocumentManager $dm) :Response
+      public function getEvents(DocumentManager $dm, LoggerInterface $logger) :Response
       {
           
         $events = $dm->createQueryBuilder(Event::class)
@@ -31,6 +33,10 @@ class EventController extends AbstractController {
             ->execute()
             ->toArray();
         
+        foreach($events as $event){
+          $logger->info(floor($event['startDate']->toDateTime()->getTimeStamp()));
+        }
+
         
         $reflectionExtractor = new ReflectionExtractor();
         $listExtractors = [$reflectionExtractor];
@@ -59,19 +65,18 @@ class EventController extends AbstractController {
           // creates a task object and initializes some data for this example
           $event = new Event();
           //$timezone = new DateTimeZone("Europe/Germany");
-          $date = new \DateTime(date(DateTimeInterface::ISO8601, strtotime('today')) );
-
-
+          
+          $startDt = new \DateTime(date(DateTimeInterface::ISO8601, strtotime('today')) );
           //$start = $date->setISODate($date->format("y"), $date->format("n"), $date->format("d"));
-          $event->setStartDate( $date );
+          $event->setStartDate( $startDt );
 
           $endDt = new \DateTime(date(DateTimeInterface::ISO8601, strtotime('tomorrow') ));
           $event->setEndDate( $endDt);
           
           $form = $this->createFormBuilder($event)
               ->add('name', TextType::class)
-              ->add('startDate', DateType::class)        
-              ->add('endDate', DateType::class)         
+              ->add('startDate', DateTimeType::class)        
+              ->add('endDate', DateTimeType::class)         
               ->add('type', ChoiceType::class, array( 
                   'choices' => EnumEventType::getEnumValues(),
                   'choice_label' => function($choice) {
@@ -88,7 +93,6 @@ class EventController extends AbstractController {
                   // $form->getData() holds the submitted values
                   // but, the original `$task` variable has also been updated
                   $event = $form->getData();
-                  $event->getStartDate()->format(DateTimeInterface::ISO8601);
                   $dm->persist($event);
                   $dm->flush();
                   return $this->redirectToRoute('event_list');
@@ -112,8 +116,8 @@ class EventController extends AbstractController {
           
           $form = $this->createFormBuilder($event)
               ->add('name', TextType::class)
-              ->add('startDate', DateType::class)        
-              ->add('endDate', DateType::class)         
+              ->add('startDate', DateTimeType::class)        
+              ->add('endDate', DateTimeType::class)         
               ->add('type', ChoiceType::class, array( 
                   'choices' => EnumEventType::getEnumValues(),
                   'choice_label' => function($choice) {
