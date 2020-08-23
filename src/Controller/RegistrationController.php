@@ -17,7 +17,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="user_registration")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, DocumentManager $dm)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, DocumentManager $dm )
     {
         // 1) build the form
         $user = new User();
@@ -34,14 +34,17 @@ class RegistrationController extends AbstractController
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
+            
+            $user = $form->getData();
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
+            $user->setIsAdmin(false);
 
             // 4) save the User!
-            $dm = $this->getDoctrine()->getManager();
             $dm->persist($user);
             $dm->flush();
 
