@@ -1,8 +1,10 @@
 <?php 
     namespace App\Document;
 
+use DateTime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Date;
 
 /** @MongoDB\Document(db="SymfonyEvents", collection="events")
  * MongoDBUnique(fields="id")
@@ -66,7 +68,7 @@ class Event
     /**
      * Get the value of startDate
      */ 
-    public function getStartDate()
+    public function getStartDate() :DateTime
     {
         return $this->startDate;
     }
@@ -76,7 +78,7 @@ class Event
      *
      * @return  self
      */ 
-    public function setStartDate($startDate)
+    public function setStartDate($startDate) :self
     {
         $this->startDate = $startDate;
 
@@ -86,7 +88,7 @@ class Event
     /**
      * Get the value of endDate
      */ 
-    public function getEndDate()
+    public function getEndDate() :DateTime
     {
         return $this->endDate;
     }
@@ -96,7 +98,7 @@ class Event
      *
      * @return  self
      */ 
-    public function setEndDate($endDate)
+    public function setEndDate($endDate) :self
     {
         $this->endDate = $endDate;
 

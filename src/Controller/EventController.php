@@ -2,6 +2,7 @@
     namespace App\Controller;
 
     use App\Document\Event;
+use App\Document\UserEvent;
 use DateTimeInterface;
 use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+use Symfony\Component\Security\Http\Event\SwitchUserEvent;
 
 class EventController extends AbstractController {
 
@@ -27,14 +29,15 @@ class EventController extends AbstractController {
       public function getEvents(DocumentManager $dm, LoggerInterface $logger) :Response
       {
           
-        $events = $dm->createQueryBuilder(Event::class)
-            ->hydrate(false)
-            ->getQuery()
-            ->execute()
-            ->toArray();
-        
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $id = $user->getId();
+
+        $logger->info($user->getId());
+
+        $events = $this->getEventsByUserid($id, $dm);
+
         foreach($events as $event){
-          $logger->info(floor($event['startDate']->toDateTime()->getTimeStamp()));
+          $logger->info($event['startDate']->toDateTime()->getTimeStamp());
         }
 
         
@@ -48,6 +51,22 @@ class EventController extends AbstractController {
           return $this->render ('event/event_list.html.twig', array('events'=> $events, 'properties'=> $properties));
       }
 
+      public function getEventsByUserid(string $userid, DocumentManager $dm) :array
+      {
+
+        $uec = new UserEventController();
+        $userevents = $uec->getUserEventsByUserId($userid, $dm);        
+        $eventIds = array_column($userevents, 'eventid');
+
+        $events =  $dm->createQueryBuilder(Event::class)
+        ->field('id')->in($eventIds)        
+        ->hydrate(false)
+        ->getQuery()            
+        ->execute()
+        ->toArray();
+
+        return $events;
+      }
       
       /**
        * @Route("/event/calendar", name="calendar_overview")
@@ -62,7 +81,8 @@ class EventController extends AbstractController {
        */
       public function createEvent(DocumentManager $dm, Request $request) :Response
       {
-          // creates a task object and initializes some data for this example
+        
+          $user = $this->get('security.token_storage')->getToken()->getUser();
           $event = new Event();
           //$timezone = new DateTimeZone("Europe/Germany");
           
@@ -95,6 +115,10 @@ class EventController extends AbstractController {
                   $event = $form->getData();
                   $dm->persist($event);
                   $dm->flush();
+
+                  $uec = new UserEventController();
+                  $uec->createUserEvent($user->getId(), $event->getId(), $dm);
+
                   return $this->redirectToRoute('event_list');
               }
 
@@ -152,14 +176,17 @@ class EventController extends AbstractController {
        /**
        * @Route("/event/delete/{id}", name="create_event")
        */
-      public function delete(string $id, DocumentManager $dm) :Response
-      {
+      public function delete(string $id, DocumentManager $dm, LoggerInterface $logger) :Response
+      {          
+        $event = $dm->getRepository(Event::class)->find($id);         
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $uec = new UserEventController();
+        $uec->deleteByEventId($user->getId(), $event->getId(), $dm, $logger);
+        
+        $dm->remove($event);
+        $dm->flush();
           
-        $event = $dm->getRepository(Event::class)->find($id);
-          
-          $dm->remove($event);
-          $dm->flush();
-          
-          return $this->redirectToRoute("event_list");
+         return $this->redirectToRoute("event_list");
       }
   }
